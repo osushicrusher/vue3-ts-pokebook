@@ -1,5 +1,17 @@
 <template>
-    <div class="PokeCards">
+    <div class="container px-5 py-24 mx-auto">
+        <ul class="flex flex-wrap -m-2">
+            <li v-for="p in pokemons" :key="p.id" class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                <div class="max-w-sm rounded overflow-hidden shadow-lg">
+                    <img class="w-full" :src="`/src/assets/thumbnails/${adjustedPokeId(p.id)}.png`" alt="Sunset in the mountains">
+                    <div class="px-6 pt-4 pb-2">
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
         <!-- {{ this.$store.state }}
         {{ this.$store.getters }} -->
         <!-- <button @click="console()">確認する</button>
@@ -66,7 +78,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import { usePokemonStore } from "../store/pokemon";
 
 import pokeJson from "../assets/pokedata/pokedex.json"
@@ -77,144 +89,16 @@ const { findPokemon, addPokemon } = storeToRefs(store)
 const testfunc = () => console.log('わろた')
 
 const pokemons = reactive(pokeJson)
-console.log(pokemons)
+console.log(('000' + 10).slice(-String(10).length))
+
+// const adjustedPokeId = ('000' + pokeId).slice(-length)
+
+const adjustedPokeId :number = ((id :number) => {
+    return String(id).padStart(3, '0')
+})
 
 
-
+    // const sortTodo = computed(() => state.todos.sort((a, b) => {
+    //   return b.createdAt.getTime() - a.createdAt.getTime()
+    // }))
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.cards {
-    display: flex;
-    flex-wrap: wrap;
-}
-a {
-    text-decoration: none;
-}
-.card {
-    background-color: #fff;
-    border: blueviolet 1px solid;
-    border-radius: 10px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, .16);
-    color: #212121;
-    text-decoration: none;
-    list-style: none;
-    margin-left: 12px;
-    margin-top: 12px;
-    width:calc((100% - (12px * 3) )/ 3);
-}
-.card__header {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-}
-.card__title {
-    color: black;
-    padding: .5rem .5rem 0;
-}
-.card__thumbnail {
-    margin: 0;
-    width: 100%;
-    text-align: center;
-}
-.card__image {
-}
-.card__body {
-  padding: .5rem;
-}
-.card__id {
-    background-color: #fff;
-    border: red 1px solid;
-    border-radius: 50%;
-    color: #000;
-    font-weight: bold;
-    height: 24px;
-    position: absolute;
-    top: -50%;
-    left: -10%;
-    line-height: 24px;
-    text-align: center;
-    width: 24px;
-}
-.card__text {
-  font-size: .1rem;
-}
-.card__text + .card__text {
-  margin-left: .5rem;
-}
-.card__text.-number {
-  text-align: right;
-}
-.card__footer {
-  padding: 4px;
-  text-align: end;
-}
-.type {
-    color: #fff;
-}
-.type.--grass {
-    background-color: seagreen;
-}
-.type.--poison {
-    background-color: slateblue;
-}
-.type.--fire {
-    background-color: red;
-}
-.type.--water {
-    background-color: royalblue;
-}
-.type.--normal {
-    background-color: slategray;
-}
-.type.--electric {
-    background-color: yellow;
-}
-.type.--ice {
-    background-color: skyblue;
-}
-.type.--fighting {
-    background-color: firebrick;
-}
-.type.--ground {
-    background-color: tan;
-}
-.type.--flying {
-    background-color: skyblue;
-}
-.type.--psychic {
-    background-color: plum;
-}
-.type.--bug {
-    background-color: palegreen;
-}
-.type.--rock {
-    background-color: peru;
-}
-.type.--ghost {
-    background-color: purple
-}
-.type.--dragon {
-    background-color: rebeccapurple;
-}
-.type.--dark {
-    background-color: black;
-}
-.type.--steal {
-    background-color: darkgray;
-}
-.type.--fairy {
-    background-color: violet;
-}
-@media screen and (min-width: 568px) {
-    .card {
-        width: 20%;
-    }
-}
-@media screen and (min-width: 993px) {
-    .card {
-        width: 14%;
-    }
-}
-</style>
