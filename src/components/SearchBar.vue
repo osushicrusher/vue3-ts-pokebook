@@ -1,41 +1,34 @@
 <template>
     <div class="SearchBar">
-        <input type="text" @keydown.enter="searchPokemon(toKatakana(pokemonName))" placeholder="ポケモンを検索しろ雑魚カスあほ" v-model="pokemonName">
-        <a href="" class="btn btn-border" @click.prevent="searchPokemon(toKatakana(pokemonName))">🔎{{ this.$store.state.pokeJson }}</a>
-        <!-- <div>{{ this.$store.state.noResultAlert }}</div> -->
+        <input type="text" @input="setPokeName"/>
+        <!-- <input type="text" @keydown.enter="searchPokemon(toKatakana(pokemonName))" placeholder="ポケモンを検索しろ雑魚カスあほ" v-model="pokemonName"> -->
+        <!-- <a href="" class="btn btn-border" @click.prevent="searchPokemon(toKatakana(pokemonName))">🔎{{ this.$store.state.pokeJson }}</a> -->
         <button @click="testfunc('ああ')">カタカナ</button>
     </div>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { reactive, computed } from "vue";
-import { usePokemonStore } from "../store/pokemon";
-
-import pokeJson from "../assets/pokedata/pokedex.json"
+import { reactive, ref, computed } from "vue";
+import { usePokemonStore, addSearchText } from "../store/pokemon";
 
 const store = usePokemonStore()
-const { findPokemon, addPokemon } = storeToRefs(store)
-
-const testfunc = () => console.log('わろた')
-
-const pokemons = reactive(pokeJson)
-console.log(('000' + 10).slice(-String(10).length))
-
-// const adjustedPokeId = ('000' + pokeId).slice(-length)
 
 const adjustedPokeId :number = ((id :number) => {
     return String(id).padStart(3, '0')
 })
 
-const toKatakana :string = ((str :string) => {
+const toKatakana :string = (str :string) => {
     str.replace(/[\u3041-\u3096]/g, match => {
         const chr = match.charCodeAt(0) + 0x60
         return String.fromCharCode(chr)
     })
-})
+}
 
-const testfunc = () => console.log(toKatakana('ああ'))
+// const pokeName = ref('');
+const setPokeName = ({ target }) :void => {
+    store.addSearchText(target.value)
+}
 
 </script>
 

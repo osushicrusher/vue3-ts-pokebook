@@ -1,4 +1,5 @@
 <template>
+  <search-bar></search-bar>
   <button @click="getPokemon()">ポケモンゲットだぜ！</button>
   <poke-cards></poke-cards>
 </template>
@@ -7,9 +8,9 @@
 import { storeToRefs } from "pinia";
 import { reactive } from "vue";
 import { usePokemonStore } from "./store/pokemon";
-import axios from "axios";
 
 import PokeCards from "./components/PokeCards.vue"
+import SearchBar from "./components/SearchBar.vue"
 
 // usePokemonStore を呼び出すだけで、グローバルストアへのアクセスが可能
 const store = usePokemonStore()

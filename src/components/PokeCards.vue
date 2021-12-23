@@ -1,7 +1,7 @@
 <template>
     <div class="container px-5 py-24 mx-auto">
         <ul class="flex flex-wrap -m-2">
-            <li v-for="p in pokemons" :key="p.id" class="p-2 lg:w-1/3 md:w-1/2 w-full">
+            <li v-for="p in filteredPokemons" :key="p.id" class="p-2 lg:w-1/6 md:w-1/4 sm:w-1/3 w-1/2">
                 <div class="max-w-sm rounded overflow-hidden shadow-lg">
                     <img class="w-full" :src="`/src/assets/thumbnails/${adjustedPokeId(p.id)}.png`" alt="Sunset in the mountains">
                     <div class="px-6 pt-4 pb-2">
@@ -72,26 +72,46 @@
                 </a>
             </li>
         </ul> -->
-        <button @click="testfunc()">わろた</button>
     </div>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { reactive, computed } from "vue";
+import { reactive, ref, computed } from "vue";
 import { usePokemonStore } from "../store/pokemon";
 
 import pokeJson from "../assets/pokedata/pokedex.json"
 
+type Names = {
+    english: string
+    japanese: string
+    chinese: string
+    french: string
+}
+
+type Base = {
+    HP: number
+    Attack: number
+    Defense: number
+    SpAttack: number
+    SpDefense: number
+    Speed: number
+}
+
+type Pokemon2 = {
+    id: number
+    name: Names
+    type: string[]
+    base: Base
+}
+
 const store = usePokemonStore()
-const { findPokemon, addPokemon } = storeToRefs(store)
+const { findPokemon, addPokemon, addPokemons, filteredPokemons } = storeToRefs(store)
 
-const testfunc = () => console.log('わろた')
-
-const pokemons = reactive(pokeJson)
-console.log(('000' + 10).slice(-String(10).length))
-
-// const adjustedPokeId = ('000' + pokeId).slice(-length)
+let pokemons = ref([])
+pokemons = pokeJson
+console.log(pokemons)
+store.addPokemons(pokemons)
 
 const adjustedPokeId :number = ((id :number) => {
     return String(id).padStart(3, '0')
