@@ -1,9 +1,6 @@
 <template>
     <div class="SearchBar">
         <input type="text" @input="setPokeName"/>
-        <!-- <input type="text" @keydown.enter="searchPokemon(toKatakana(pokemonName))" placeholder="ポケモンを検索しろ雑魚カスあほ" v-model="pokemonName"> -->
-        <!-- <a href="" class="btn btn-border" @click.prevent="searchPokemon(toKatakana(pokemonName))">🔎{{ this.$store.state.pokeJson }}</a> -->
-        <button @click="testfunc('ああ')">カタカナ</button>
     </div>
 </template>
 

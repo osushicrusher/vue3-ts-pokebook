@@ -1,23 +1,5 @@
 import { defineStore } from "pinia";
 
-type FilterType = "all" | "finished" | "unfinished";
-
-type Type = {
-  name: string
-  url: string
-}
-
-type Types = {
-  slot: number
-  type: Type
-}
-
-type Pokemon = {
-  id: number
-  name: string
-  types: Type
-}
-
 type Names = {
   english: string
   japanese: string
@@ -34,7 +16,7 @@ type Base = {
   Speed: number
 }
 
-type Pokemon2 = {
+type Pokemon = {
   id: number
   name: Names
   type: string[]
@@ -49,14 +31,16 @@ export const usePokemonStore = defineStore("pokemon", {
   state: () => {
     return {
       pokemon: {} as Pokemon,
-      pokemons: [] as Pokemon2[],
+      pokemons: [] as Pokemon[],
       searchText: '',
+      selectedId: 0,
+      isModalClosed: true
     }
   },
   // getters は state 及び他の getter へのアクセスが可能
   // getter は全て computed 扱いになるため、引数に応じて結果を差し替える場合は関数を戻す
   getters: {
-    filteredPokemons(state) :Pokemon2[] {
+    filteredPokemons(state) :Pokemon[] {
       const txt = state.searchText
       const katakanaTxt = txt.replace(/[\u3042-\u3093]/g, m=>String.fromCharCode(m.charCodeAt(0) + 96))
       return state.pokemons.filter(p => txt === p.name.japanese.substr(0, txt.length) || katakanaTxt === p.name.japanese.substr(0, txt.length))
@@ -91,11 +75,17 @@ export const usePokemonStore = defineStore("pokemon", {
     addPokemon(pokemon: Pokemon) {
       this.pokemon = pokemon
     },
-    addPokemons(pokemons: Pokemon2[]) {
+    addPokemons(pokemons: Pokemon[]) {
       this.pokemons = pokemons
     },
     addSearchText(text: string) {
       this.searchText = text
+    },
+    addSelectedId(id :number) {
+      this.selectedId = id
+    },
+    toggleModal() {
+      this.isModalClosed = !this.isModalClosed
     }
     // toggleTodo(id: number) {
     //   const todo = this.findTodo(id);
