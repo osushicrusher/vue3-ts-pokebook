@@ -23,6 +23,8 @@ type Pokemon = {
   base: Base
 }
 
+type Page = 'first' | 'second' | 'third'
+
 
 // defineStore 関数を用いてストアを作成する
 // 第一引数 "todos" はアプリケーション全体でストアを特定するためのユニークキー
@@ -33,8 +35,9 @@ export const usePokemonStore = defineStore("pokemon", {
       pokemon: {} as Pokemon,
       pokemons: [] as Pokemon[],
       searchText: '',
-      selectedId: 0,
-      isModalClosed: true
+      selectedId: 1,
+      isModalClosed: true,
+      page: "first" as Page
     }
   },
   // getters は state 及び他の getter へのアクセスが可能
@@ -72,24 +75,23 @@ export const usePokemonStore = defineStore("pokemon", {
   },
   // mutations が存在しないので、State の更新は全て actions で行う
   actions: {
-    addPokemon(pokemon: Pokemon) {
+    addPokemon(pokemon: Pokemon) :void {
       this.pokemon = pokemon
     },
-    addPokemons(pokemons: Pokemon[]) {
+    addPokemons(pokemons: Pokemon[]) :void {
       this.pokemons = pokemons
     },
-    addSearchText(text: string) {
+    addSearchText(text: string) :void {
       this.searchText = text
     },
-    addSelectedId(id :number) {
+    addSelectedId(id :number) :void {
       this.selectedId = id
     },
-    toggleModal() {
+    toggleModal() :void {
       this.isModalClosed = !this.isModalClosed
+    },
+    changePage(page :Page) :void {
+      this.page = page
     }
-    // toggleTodo(id: number) {
-    //   const todo = this.findTodo(id);
-    //   todo.finished = !todo.finished;
-    // },
-  },
+  }
 });

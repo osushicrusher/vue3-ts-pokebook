@@ -14,10 +14,6 @@
     </div>
 </template>
 
-todo
--baseの表示
-
-
 <script>
 export default {
     name: "Pokemon",

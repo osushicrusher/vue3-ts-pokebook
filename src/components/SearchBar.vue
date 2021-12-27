@@ -1,6 +1,7 @@
 <template>
     <div class="SearchBar">
         <input type="text" @input="setPokeName"/>
+        <fa icon="search" />
     </div>
 </template>
 
