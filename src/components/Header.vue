@@ -26,7 +26,6 @@ const store = usePokemonStore()
 
 // コンポーネントマウント時にダークモード適用か確認する
 onMounted(() => {
-    console.log(document.cookie)
     const isDarkmode = document.cookie === 'isDarkmode=true'
     if(isDarkmode) {
         document.documentElement.classList.add('dark')

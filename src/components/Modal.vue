@@ -57,7 +57,7 @@ const toggleModal = () => {
 
 const pokemon = store.pokemon
 
-const adjustedPokeId :number = ((id :number) => {
+const adjustedPokeId = ((id :number) :string => {
     return String(id).padStart(3, '0')
 })
 

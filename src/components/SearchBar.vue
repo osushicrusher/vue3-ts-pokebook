@@ -17,11 +17,11 @@ import { usePokemonStore } from "../store/pokemon";
 
 const store = usePokemonStore()
 
-const adjustedPokeId :number = ((id :number) => {
+const adjustedPokeId = ((id :number) :string => {
     return String(id).padStart(3, '0')
 })
 
-const toKatakana :string = (str :string) => {
+const toKatakana = (str :string) => {
     str.replace(/[\u3041-\u3096]/g, match => {
         const chr = match.charCodeAt(0) + 0x60
         return String.fromCharCode(chr)

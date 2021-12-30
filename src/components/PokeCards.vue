@@ -45,8 +45,7 @@ type Pokemon = {
 const store = usePokemonStore()
 const { filteredPokemonsByName } = storeToRefs(store)
 
-let pokemons = ref([])
-pokemons = pokeJson
+const pokemons = ref(pokeJson)
 store.addPokemons(pokemons)
 
 // ポケモンIDの桁整形
@@ -72,26 +71,26 @@ type PokeTypeInJa = 'ノーマル' | 'ほのお' | 'みず' | 'くさ' | 'でん
                 'はがね' | 'フェアリー'
 
 // タイプを日本語で返す
-const translateTypeInJa = (type :PokeType) :PokeTypeInJa => {
+const translateTypeInJa = (type :string) :PokeTypeInJa => {
     const typeObj = {
-        "Normal": 'ノーマル' as PokeTypeInJa,
-        "Fire": 'ほのお' as PokeTypeInJa,
-        "Water": 'みず' as PokeTypeInJa,
-        "Grass": 'くさ' as PokeTypeInJa,
-        "Electric": 'でんき' as PokeTypeInJa,
-        "Ice": 'こおり' as PokeTypeInJa,
-        "Fighting": 'かくとう' as PokeTypeInJa,
-        "Poison": 'どく' as PokeTypeInJa,
-        "Ground": 'じめん' as PokeTypeInJa,
-        "Flying": 'ひこう' as PokeTypeInJa,
-        "Psychic": 'エスパー' as PokeTypeInJa,
-        "Bug": 'むし' as PokeTypeInJa,
-        "Rock": 'いわ' as PokeTypeInJa,
-        "Ghost": 'ゴースト' as PokeTypeInJa,
+        "Normal": 'ノーマル',
+        "Fire": 'ほのお',
+        "Water": 'みず',
+        "Grass": 'くさ',
+        "Electric": 'でんき',
+        "Ice": 'こおり',
+        "Fighting": 'かくとう',
+        "Poison": 'どく',
+        "Ground": 'じめん',
+        "Flying": 'ひこう',
+        "Psychic": 'エスパー',
+        "Bug": 'むし',
+        "Rock": 'いわ',
+        "Ghost": 'ゴースト',
         "Dragon": 'ドラゴン'as PokeTypeInJa,
-        "Dark": 'あく' as PokeTypeInJa,
-        "Steel": 'はがね' as PokeTypeInJa,
-        "Fairy": 'フェアリー' as PokeTypeInJa,
+        "Dark": 'あく',
+        "Steel": 'はがね',
+        "Fairy": 'フェアリー',
     }
     return typeObj[type]
 }
