@@ -3,21 +3,38 @@
     <Header />
       <div id="main">
         <div id="first" :class="{'hidden': store.page !== 'first'}">
-          <audio id="test" preload="auto">
-            <source src="./assets/bgm/bgm002.wav" type="audio/wav">
-          </audio>
-          <button @click="play()">再生<fa icon="play" /></button>
-          <div>
+          <div class="container px-5 py-24 mx-auto">
             <search-bar></search-bar>
-            <poke-cards></poke-cards>
+            <!-- <div class="flex py-20">
+              <div class="inline-block mr-3">
+                <button class="z-10 block p-2 text-gray-700 bg-white border border-transparent rounded-md dark:text-white focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none">
+                  <span class="mr-2">ステータス</span><fa icon="chevron-down" />
+                </button>
+                  <ul class="z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800">
+                    <li v-for="(s, i) in statuses" :key="i" @click="addStatus(s)" :class="{'bg-gray-500': store.selectedStatus === s }" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300">{{ s }}</li>
+                  </ul>
+              </div>
+              <div class="inline-block">
+                <button class="z-10 block p-2 text-gray-700 bg-white border border-transparent rounded-md dark:text-white focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none">
+                  <span class="mr-2">並び順</span><fa icon="chevron-down" />
+                </button>
+                <ul class="z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800">
+                  <li v-for="t in SortTypes" @click="addSortType(t)" :class="{'bg-gray-500': t === store.sortType }" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300">{{ t }}</li>
+                </ul>
+              </div>
+            </div> -->
+            <div class="py-20 min-h-screen">
+              <poke-cards></poke-cards>
+            </div>
           </div>
           <Modal :class="{'hidden': store.isModalClosed}"/>
         </div>
         <div id="second" :class="{'hidden': store.page !== 'second'}">
-          
-        </div>
-        <div id="third" :class="{'hidden': store.page !== 'third'}">
-          
+          <div class="container px-5 py-24 mx-auto">
+            <div class="py-20">
+              <poke-cards></poke-cards>
+            </div>
+          </div>
         </div>
       </div>
     <Footer />
@@ -25,8 +42,6 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { onMounted, reactive, ref, computed } from "vue";
 import { usePokemonStore } from "./store/pokemon";
 import PokeCards from "./components/PokeCards.vue"
 import SearchBar from "./components/SearchBar.vue"
@@ -40,11 +55,18 @@ const store = usePokemonStore()
 const toggleModal = () => {
   store.toggleModal()
 }
-const { findPokemon, addPokemon, selectedId } = storeToRefs(store)
+// const { selectedId } = storeToRefs(store)
 
-const play = () => {
-  const test = document.getElementById('test')
-  test.play()
-}
+// type Status = null | 'HP' | 'こうげき' | 'ぼうぎょ' | 'とくこう' | 'とくぼう' | 'すばやさ'
+// const statuses = ['HP', 'こうげき', 'ぼうぎょ', 'とくこう', 'とくぼう', 'すばやさ']
+// const addStatus = (status :Status) => {
+//   store.addStatus(status)
+// }
+
+// type Sort = null | '降順' | '昇順'
+// const SortTypes = ['降順', '昇順']
+// const addSortType = (type :Sort) => {
+//   store.addSortType(type)
+// }
 
 </script>

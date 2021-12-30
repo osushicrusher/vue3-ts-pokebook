@@ -1,14 +1,19 @@
 <template>
-    <div class="SearchBar">
-        <input type="text" @input="setPokeName"/>
-        <fa icon="search" />
+    <div class="text-center">
+        <input
+        type="text"
+        @input="setPokeName"
+        class="bg-white rounded-3xl p-3 text-black shadow-md border divide-solid border-black w-10/12 md:w-8/12 lg:w-6/12" 
+        placeholder="ポケモンの名前を入力する"
+        />
+        <!-- <fa icon="search" class="search"/> -->
     </div>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { reactive, ref, computed } from "vue";
-import { usePokemonStore, addSearchText } from "../store/pokemon";
+import { usePokemonStore } from "../store/pokemon";
 
 const store = usePokemonStore()
 
@@ -70,50 +75,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.searchBar {
-    text-align: center;
-}
 input[type="text"] {
-    background-color: #EDF2F7;
-    border-radius: 20px;
-    box-shadow: inner 0 0 4px rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    font-size: 1em;
-    font-family:Arial, sans-serif;
-    color: #000;
     border: solid 1px rgb(225, 255, 255);
-    /* margin:0 0 20px; */
-    width: 60%;
 }
-.btn,
-a.btn,
-button.btn {
-  position: relative;
-  display: inline-block;
-  /* padding: 1rem 4rem; */
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  text-align: center;
-  vertical-align: middle;
-  text-decoration: none;
-  color: #212529;
-  line-height: 28px;
-  transform: translate(-50%, -5%);
-  height: 28px;
-  width: 28px;
-}
-a.btn-border {
-  border: 1px solid #000;
-  border-radius: 50%;
-  background: #fff;
-}
-a.btn-border:hover {
-  color: #fff;
-  background: #000;
-}
+
 </style>
