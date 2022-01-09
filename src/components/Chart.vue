@@ -1,3 +1,10 @@
+<template>
+  <div>
+    <PieChart :chartData="pieData" />
+    <!-- <LineChart :chartData="lineData" /> -->
+  </div>
+</template>
+
 <script lang="ts">
 import { Chart, ChartData, registerables } from "chart.js";
 import { defineComponent } from "vue";
@@ -49,16 +56,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<template>
-  <div class="wrapper">
-    <PieChart :chartData="pieData" />
-    <LineChart :chartData="lineData" />
-  </div>
-</template>
-
-<style scoped>
-.wrapper {
-  display: flex;
-}
-</style>

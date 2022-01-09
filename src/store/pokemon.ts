@@ -27,10 +27,7 @@ type Page = 'first' | 'second' | 'third'
 type Status = null | 'HP' | 'こうげき' | 'ぼうぎょ' | 'とくこう' | 'とくぼう' | 'すばやさ'
 type Sort = null | '降順' | '昇順'
 
-// defineStore 関数を用いてストアを作成する
-// 第一引数 "todos" はアプリケーション全体でストアを特定するためのユニークキー
 export const usePokemonStore = defineStore("pokemon", {
-  // State は初期値を返す関数を定義する
   state: () => {
     return {
       pokemon: {} as Pokemon,
@@ -38,50 +35,73 @@ export const usePokemonStore = defineStore("pokemon", {
       searchText: '',
       selectedId: 1,
       isModalClosed: true,
-      page: "first" as Page,
+      pokemonPage: 1,
       selectedStatus: null as Status,
-      sortType: null as Sort 
+      sortType: null as Sort,
+      perPage: 20
     }
   },
-  // getters は state 及び他の getter へのアクセスが可能
-  // getter は全て computed 扱いになるため、引数に応じて結果を差し替える場合は関数を戻す
   getters: {
+    getPokemonsLen(state) :number {
+      if(state.searchText === '') return state.pokemons.length
+      return 1
+    },
+    // 名前検索で表示する(未入力の場合はperPage分表示させる)
     filteredPokemonsByName(state) :Pokemon[] {
+      const pokemons = state.pokemons
       const txt = state.searchText
+      const perPage = state.perPage
+      if(txt === '') return pokemons.slice(0, perPage)
       const katakanaTxt = txt.replace(/[\u3042-\u3093]/g, m=>String.fromCharCode(m.charCodeAt(0) + 96))
-      return state.pokemons.filter(p => txt === p.name.japanese.substr(0, txt.length) || katakanaTxt === p.name.japanese.substr(0, txt.length))
+      const res = pokemons.filter(p => txt === p.name.japanese.substr(0, txt.length) || katakanaTxt === p.name.japanese.substr(0, txt.length))
+      return res.slice(perPage*state.pokemonPage-1, perPage*perPage)
+    },
+    // 表示ポケモン数からページネーションに必要なページ数を取得
+    getPageNum(state) :number {
+      const perPage = state.perPage
+      return Math.ceil(this.getPokemonsLen / perPage)
+    },
+    // 1〜ページネーションに必要なページ数までを要素とする配列を返す
+    getPageNumArr() :number[] {
+      return [...Array(this.getPageNum)].map((_, i) => i+1);
     },
     filteredPokemonsByConditions(state) :Pokemon[] {
       return state.pokemons.sort((a, b) => {
         let sumA = 0
         let sumB = 0
-        if(this.selectedStatus === 'HP'){ 
+        if(this.selectedStatus === 'HP'){
           sumA = a.base.HP
           sumB = b.base.HP
         }
-        else if(this.selectedStatus === 'こうげき') { 
+        else if(this.selectedStatus === 'こうげき') {
           sumA = a.base.Attack
           sumB = b.base.Attack
         }
-        else if(this.selectedStatus === 'ぼうぎょ') { 
+        else if(this.selectedStatus === 'ぼうぎょ') {
           sumA = a.base.Defense
           sumB = b.base.Defense
         }
-        else if(this.selectedStatus === 'とくこう') { 
+        else if(this.selectedStatus === 'とくこう') {
           sumA = a.base.SpAttack
           sumB = b.base.SpAttack
         }
-        else if(this.selectedStatus === 'とくぼう') { 
+        else if(this.selectedStatus === 'とくぼう') {
           sumA = a.base.SpDefense
           sumB = b.base.SpDefense
         }
-        else if(this.selectedStatus === 'すばやさ') { 
+        else if(this.selectedStatus === 'すばやさ') {
           sumA = a.base.Speed
           sumB = b.base.Speed
         }
         if(sumA > sumB) return 1
         else return -1
       })
+    },
+    findselectedId(state) {
+      return state.selectedId
+    },
+    findPerPage(state) {
+      return state.perPage
     }
     // findPokemon(state) {
     //   return (id: number): TODO => {
@@ -108,7 +128,6 @@ export const usePokemonStore = defineStore("pokemon", {
     //   }
     // },
   },
-  // mutations が存在しないので、State の更新は全て actions で行う
   actions: {
     addPokemon(pokemon: Pokemon) :void {
       this.pokemon = pokemon
@@ -125,9 +144,6 @@ export const usePokemonStore = defineStore("pokemon", {
     toggleModal() :void {
       this.isModalClosed = !this.isModalClosed
     },
-    changePage(page :Page) :void {
-      this.page = page
-    },
     addStatus(status :Status) :void {
       this.selectedStatus = status
     },
@@ -137,6 +153,9 @@ export const usePokemonStore = defineStore("pokemon", {
         return
       }
       this.sortType = type
+    },
+    addPokemonPage(page :number) :void {
+      this.pokemonPage = page
     }
   }
 });

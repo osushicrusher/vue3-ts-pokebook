@@ -1,21 +1,20 @@
 <template>
-  <div class="bg-gray-100 dark:bg-gray-800 dark:text-gray-50">
-    <Header />
-      <div class="container px-5 py-24 mx-auto">
-        <router-view></router-view>
-      </div>
-    <Footer />
-  </div>
+    <div>
+        <search-bar></search-bar>
+        <div class="py-20 min-h-screen">
+            <Pagination />
+            <poke-cards></poke-cards>
+        </div>
+        <Pagination />
+    </div>
 </template>
 
 <script setup lang="ts">
-import { usePokemonStore } from "./store/pokemon";
-import PokeCards from "./components/PokeCards.vue"
-import SearchBar from "./components/SearchBar.vue"
-import Modal from "./components/Modal.vue"
-import Chart from "./components/Chart.vue"
-import Header from "./components/Header.vue"
-import Footer from "./components/Footer.vue"
+import { usePokemonStore } from "../../store/pokemon";
+import PokeCards from "../PokeCards.vue"
+import SearchBar from "../SearchBar.vue"
+import Chart from "../Chart.vue"
+import Pagination from "../Pagination.vue"
 
 const store = usePokemonStore()
 // let isModalClosed = ref(false)

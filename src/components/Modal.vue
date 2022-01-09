@@ -61,15 +61,4 @@ const adjustedPokeId = ((id :number) :string => {
     return String(id).padStart(3, '0')
 })
 
-// type Props = {
-//     isModalClosed: boolean
-// }
-
-// const props = defineProps<Props>();
-
-// let isModalClosed = ref(false)
-// const toggleModal = () => {
-//   isModalClosed.value = !isModalClosed.value
-// }
-
 </script>

@@ -8,8 +8,8 @@
             <span class="ml-3 text-xl dark:text-white">Tailblocks</span>
             </router-link>
             <nav class="mr-auto ml-4 py-1 pl-4 md:border-gray-400 flex flex-wrap items-center text-base justify-center">
-                <router-link to="/1" @click="changepage('first')" class="mr-5 hover:text-gray-900 dark:text-white">見る</router-link>
-                <router-link to="/2" @click="changepage('second')" class="mr-5 hover:text-gray-900 dark:text-white">クイズ</router-link>
+                <router-link to="/1" @click="changepage('first')" class="mr-5 hover:text-gray-900 dark:text-white">一覧</router-link>
+                <router-link to="/2" @click="changepage('second')" class="mr-5 hover:text-gray-900 dark:text-white">比較</router-link>
             </nav>
             <button @click="theme()" class="w-12 h-6 rounded-full p-1 bg-gray-400 dark:bg-gray-600 relative transition-colors duration-500 ease-infocus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-600 focus:border-transparent">
                 <div id="toggle" class="rounded-full w-4 h-4 bg-blue-600 dark:bg-blue-500 relative ml-0 dark:ml-6 pointer-events-none transition-all duration-300 ease-out"></div>
@@ -20,9 +20,6 @@
 
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { usePokemonStore } from "../store/pokemon";
-
-const store = usePokemonStore()
 
 // コンポーネントマウント時にダークモード適用か確認する
 onMounted(() => {
@@ -44,12 +41,6 @@ const theme = () :void => {
         document.documentElement.classList.add('dark')
         document.cookie = "isDarkmode=" + encodeURIComponent("true");
     }
-}
-
-// ページ切り替え用
-type Page = 'first' | 'second'
-const changepage = (page :Page) => {
-    store.changePage(page)
 }
 
 </script>
