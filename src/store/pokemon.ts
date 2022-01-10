@@ -23,7 +23,6 @@ type Pokemon = {
   base: Base
 }
 
-type Page = 'first' | 'second' | 'third'
 type Status = null | 'HP' | 'こうげき' | 'ぼうぎょ' | 'とくこう' | 'とくぼう' | 'すばやさ'
 type Sort = null | '降順' | '昇順'
 
@@ -42,9 +41,22 @@ export const usePokemonStore = defineStore("pokemon", {
     }
   },
   getters: {
+    // ポケモン匹数を返す
     getPokemonsLen(state) :number {
       if(state.searchText === '') return state.pokemons.length
       return 1
+    },
+    // 選択されたポケモンIDを返す
+    findSelectedId(state) {
+      return state.selectedId
+    },
+    // selectedIdから、選択されたポケモンを返す
+    findSelectedPokemon(state) :Pokemon {
+      return state.pokemons.filter(p => p.id === this.findSelectedId)[0]
+    },
+    // 選択されたポケモンのステータスを返す
+    findSelectedPokemonStatus() :Base {
+      return this.findSelectedPokemon.base
     },
     // 名前検索で表示する(未入力の場合はperPage分表示させる)
     filteredPokemonsByName(state) :Pokemon[] {
@@ -61,7 +73,7 @@ export const usePokemonStore = defineStore("pokemon", {
       const perPage = state.perPage
       return Math.ceil(this.getPokemonsLen / perPage)
     },
-    // 1〜ページネーションに必要なページ数までを要素とする配列を返す
+    // 1〜「ページネーションに必要なページ数」までを要素とする配列を返す
     getPageNumArr() :number[] {
       return [...Array(this.getPageNum)].map((_, i) => i+1);
     },
@@ -97,36 +109,9 @@ export const usePokemonStore = defineStore("pokemon", {
         else return -1
       })
     },
-    findselectedId(state) {
-      return state.selectedId
-    },
     findPerPage(state) {
       return state.perPage
     }
-    // findPokemon(state) {
-    //   return (id: number): TODO => {
-    //     const todo = state.todos.find((todo) => todo.id === id);
-    //     if (todo === undefined) throw new Error("todo not found");
-
-    //     return todo;
-    //   };
-    // },
-    // finishedTodos(state) {
-    //   return state.todos.filter((todo) => todo.finished);
-    // },
-    // unfinishedTodos(state) {
-    //   return state.todos.filter((todo) => !todo.finished);
-    // },
-    // filteredTodos(state): TODO[] {
-    //   switch (state.filter) {
-    //     case "finished":
-    //       return this.finishedTodos;
-    //     case "unfinished":
-    //       return this.unfinishedTodos;
-    //     default:
-    //       return this.todos;
-    //   }
-    // },
   },
   actions: {
     addPokemon(pokemon: Pokemon) :void {
