@@ -1,11 +1,10 @@
 <template>
-  <div>
     <PieChart :chartData="pieData" />
-    <!-- <LineChart :chartData="lineData" /> -->
-  </div>
 </template>
 
 <script lang="ts">
+import { storeToRefs } from "pinia";
+import { usePokemonStore } from "../store/pokemon";
 import { Chart, ChartData, registerables } from "chart.js";
 import { defineComponent } from "vue";
 import { PieChart, LineChart } from "vue-chart-3";
@@ -21,38 +20,38 @@ export default defineComponent({
     LineChart,
   },
   setup() {
+    const store = usePokemonStore()
+    const { findSelectedPokemonStatus } = storeToRefs(store)
+
+    // selectedPokemonのステータス
+    const HP = findSelectedPokemonStatus.value.HP
+    const Attack = findSelectedPokemonStatus.value.Attack
+    const Defense = findSelectedPokemonStatus.value.Defense
+    const SpAttack = findSelectedPokemonStatus.value.SpAttack
+    const SpDefense = findSelectedPokemonStatus.value.SpDefense
+    const Speed = findSelectedPokemonStatus.value.Speed
+
     // PieChart 用のデータ
     const pieData: ChartData<"pie"> = {
-      labels: ["Red", "Blue", "Yellow"],
+      labels: ["HP", "こうげき", "ぼうぎょ", "とくこう", "とくぼう", "すばやさ"],
       datasets: [
         {
           label: "My First Dataset",
-          data: [300, 50, 100],
+          data: [HP, Attack, Defense, SpAttack, SpDefense, Speed],
           backgroundColor: [
             "rgb(255, 99, 132)",
             "rgb(54, 162, 235)",
             "rgb(255, 205, 86)",
+            "rgb(50, 50, 150)",
+            "rgb(100, 150, 150)",
+            "rgb(150, 100, 100)",
           ],
           hoverOffset: 4,
         },
       ],
     };
 
-    // LineChart 用のデータ
-    const lineData: ChartData<"line"> = {
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-      datasets: [
-        {
-          label: "My First Dataset",
-          data: [65, 59, 80, 81, 56, 55, 40],
-          fill: false,
-          borderColor: "rgb(75, 192, 192)",
-          tension: 0.1,
-        },
-      ],
-    };
-
-    return { pieData, lineData };
+    return { pieData };
   },
 });
 </script>
