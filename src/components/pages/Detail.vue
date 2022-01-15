@@ -27,11 +27,8 @@ store.addSelectedId(Number(id))
 
 const { findSelectedPokemon } = storeToRefs(store)
 
-// const pokeId = parseInt(route.params.id)
 const adjustedPokeId = ((id :number) :string => {
     return String(id).padStart(3, '0')
 })
-
-type Status = 'HP' | 'こうげき' | 'ぼうぎょ' | 'とくこう' | 'とくぼう' | 'すばやさ'
 
 </script>

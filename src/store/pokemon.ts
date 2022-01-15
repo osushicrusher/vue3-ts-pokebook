@@ -23,8 +23,13 @@ type Pokemon = {
   base: Base
 }
 
-type Status = null | 'HP' | 'こうげき' | 'ぼうぎょ' | 'とくこう' | 'とくぼう' | 'すばやさ'
-type Sort = null | '降順' | '昇順'
+type Status = '' | 'HP' | 'こうげき' | 'ぼうぎょ' | 'とくこう' | 'とくぼう' | 'すばやさ'
+type Sort = '' | '降順' | '昇順'
+
+type SortCondition = {
+  status: Status
+  sort: Sort
+}
 
 export const usePokemonStore = defineStore("pokemon", {
   state: () => {
@@ -35,9 +40,8 @@ export const usePokemonStore = defineStore("pokemon", {
       selectedId: 1,
       isModalClosed: true,
       pokemonPage: 1,
-      selectedStatus: null as Status,
-      sortType: null as Sort,
-      perPage: 20
+      perPage: 20,
+      sortCondition: {} as SortCondition
     }
   },
   getters: {
@@ -78,40 +82,43 @@ export const usePokemonStore = defineStore("pokemon", {
     getPageNumArr() :number[] {
       return [...Array(this.getPageNum)].map((_, i) => i+1);
     },
-    filteredPokemonsByConditions(state) :Pokemon[] {
-      return state.pokemons.sort((a, b) => {
-        let sumA = 0
-        let sumB = 0
-        if(this.selectedStatus === 'HP'){
-          sumA = a.base.HP
-          sumB = b.base.HP
-        }
-        else if(this.selectedStatus === 'こうげき') {
-          sumA = a.base.Attack
-          sumB = b.base.Attack
-        }
-        else if(this.selectedStatus === 'ぼうぎょ') {
-          sumA = a.base.Defense
-          sumB = b.base.Defense
-        }
-        else if(this.selectedStatus === 'とくこう') {
-          sumA = a.base.SpAttack
-          sumB = b.base.SpAttack
-        }
-        else if(this.selectedStatus === 'とくぼう') {
-          sumA = a.base.SpDefense
-          sumB = b.base.SpDefense
-        }
-        else if(this.selectedStatus === 'すばやさ') {
-          sumA = a.base.Speed
-          sumB = b.base.Speed
-        }
-        if(sumA > sumB) return 1
-        else return -1
-      })
-    },
+    // filteredPokemonsByConditions(state) :Pokemon[] {
+    //   return state.pokemons.sort((a, b) => {
+    //     let sumA = 0
+    //     let sumB = 0
+    //     if(this.selectedStatus === 'HP'){
+    //       sumA = a.base.HP
+    //       sumB = b.base.HP
+    //     }
+    //     else if(this.selectedStatus === 'こうげき') {
+    //       sumA = a.base.Attack
+    //       sumB = b.base.Attack
+    //     }
+    //     else if(this.selectedStatus === 'ぼうぎょ') {
+    //       sumA = a.base.Defense
+    //       sumB = b.base.Defense
+    //     }
+    //     else if(this.selectedStatus === 'とくこう') {
+    //       sumA = a.base.SpAttack
+    //       sumB = b.base.SpAttack
+    //     }
+    //     else if(this.selectedStatus === 'とくぼう') {
+    //       sumA = a.base.SpDefense
+    //       sumB = b.base.SpDefense
+    //     }
+    //     else if(this.selectedStatus === 'すばやさ') {
+    //       sumA = a.base.Speed
+    //       sumB = b.base.Speed
+    //     }
+    //     if(sumA > sumB) return 1
+    //     else return -1
+    //   })
+    // },
     findPerPage(state) {
       return state.perPage
+    },
+    findSortCondition(state) {
+      return state.sortCondition
     }
   },
   actions: {
@@ -130,16 +137,24 @@ export const usePokemonStore = defineStore("pokemon", {
     toggleModal() :void {
       this.isModalClosed = !this.isModalClosed
     },
-    addStatus(status :Status) :void {
-      this.selectedStatus = status
+    //ソート条件のステータスを追加する
+    addConditionStatus(val :Status) :void {
+      this.sortCondition['status'] = val
     },
-    addSortType(type :Sort) :void {
-      if(this.sortType === type) {
-        this.sortType = null
-        return
-      }
-      this.sortType = type
+    //ソート条件のを追加する
+    addConditionSort(val :Sort) :void {
+      this.sortCondition['sort'] = val
     },
+    // addStatus(status :Status) :void {
+    //   this.selectedStatus = status
+    // },
+    // addSortType(type :Sort) :void {
+    //   if(this.sortType === type) {
+    //     this.sortType = null
+    //     return
+    //   }
+    //   this.sortType = type
+    // },
     addPokemonPage(page :number) :void {
       this.pokemonPage = page
     }
