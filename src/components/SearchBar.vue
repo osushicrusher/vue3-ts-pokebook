@@ -25,7 +25,7 @@ const toKatakana = (str :string) => {
     })
 }
 
-const setPokeName = ({ target }) :void => {
+const setPokeName = ({ target } :any) :void => {
     store.addSearchText(target.value)
 }
 

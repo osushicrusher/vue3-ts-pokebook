@@ -66,7 +66,8 @@ export const usePokemonStore = defineStore("pokemon", {
       if(txt === '') return pokemons.slice(0, perPage)
       const katakanaTxt = txt.replace(/[\u3042-\u3093]/g, m=>String.fromCharCode(m.charCodeAt(0) + 96))
       const res = pokemons.filter(p => txt === p.name.japanese.substr(0, txt.length) || katakanaTxt === p.name.japanese.substr(0, txt.length))
-      return res.slice(perPage*state.pokemonPage-1, perPage*perPage)
+      // return res.slice(perPage*state.pokemonPage-1, perPage*perPage)
+      return res.slice(0, perPage)
     },
     // 表示ポケモン数からページネーションに必要なページ数を取得
     getPageNum(state) :number {

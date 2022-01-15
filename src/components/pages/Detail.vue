@@ -6,7 +6,7 @@
         </h1>
         <div class="sm:flex sm:items-center sm:justify-center py-24 sm:p-0">
             <div class="sm:w-1/2 mt-3 sm:mt-0 sm:ml-4 sm:text-left">
-                <img class="lg:w-2/6 md:w-3/6 w-5/6 object-cover object-center rounded mx-auto" alt="hero" :src="`/src/assets/thumbnails/${adjustedPokeId(store.selectedId)}.png`">
+                <img class="md:w-2/3 w-5/6 object-cover object-center rounded mx-auto" alt="hero" :src="`/src/assets/thumbnails/${adjustedPokeId(store.selectedId)}.png`">
             </div>
             <Chart class="sm:w-1/2 py-24" />
         </div>

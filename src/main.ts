@@ -11,6 +11,7 @@ import { createPinia } from "pinia"
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeComponent from "./components/pages/Home.vue"
 import DetailComponent from "./components/pages/Detail.vue"
+import CompareComponent from "./components/pages/Compare.vue"
 
 const routes = [
     {
@@ -20,6 +21,10 @@ const routes = [
     {
         path: '/:id',
         component: DetailComponent
+    },
+    {
+        path: '/compare',
+        component: CompareComponent
     }
 ]
 

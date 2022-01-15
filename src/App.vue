@@ -9,31 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { usePokemonStore } from "./store/pokemon";
-import PokeCards from "./components/PokeCards.vue"
-import SearchBar from "./components/SearchBar.vue"
-import Modal from "./components/Modal.vue"
-import Chart from "./components/Chart.vue"
 import Header from "./components/Header.vue"
 import Footer from "./components/Footer.vue"
-
-const store = usePokemonStore()
-// let isModalClosed = ref(false)
-const toggleModal = () => {
-  store.toggleModal()
-}
-// const { selectedId } = storeToRefs(store)
-
-// type Status = null | 'HP' | 'こうげき' | 'ぼうぎょ' | 'とくこう' | 'とくぼう' | 'すばやさ'
-// const statuses = ['HP', 'こうげき', 'ぼうぎょ', 'とくこう', 'とくぼう', 'すばやさ']
-// const addStatus = (status :Status) => {
-//   store.addStatus(status)
-// }
-
-// type Sort = null | '降順' | '昇順'
-// const SortTypes = ['降順', '昇順']
-// const addSortType = (type :Sort) => {
-//   store.addSortType(type)
-// }
-
 </script>
