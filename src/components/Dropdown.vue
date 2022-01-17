@@ -31,10 +31,6 @@ const props = defineProps<{
 const store = usePokemonStore()
 const { findSortCondition } = storeToRefs(store)
 
-const checkCondition = (val :Status | Sort) => {
-    return store.findSortCondition.status === val || store.findSortCondition.sort === val
-}
-
 // ソート条件を設定する
 const addCondition = (val :Status | Sort) :void => {
     // すでに設定された項目の場合、設定を解除して返す
@@ -46,13 +42,16 @@ const addCondition = (val :Status | Sort) :void => {
         store.findSortCondition.sort = ''
         return
     }
-    // sortをセット
     if('降順' === val || '昇順' === val) {
         store.addConditionSort(val)
     } else {
-        // statusをセット
         store.addConditionStatus(val)
     }
+}
+
+// すでに設定されている条件か判定する
+const checkCondition = (val :Status | Sort) => {
+    return store.findSortCondition.status === val || store.findSortCondition.sort === val
 }
 
 </script>
